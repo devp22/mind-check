@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: #f7f5e4;
+        }
+        .badge.text-bg-primary {
+          background-color: #45f576 !important;
+            width: 75%;
+        }
+        .submitButtonDivision {
+            text-align: center;
+        }
+        .quiz {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            width: 75%;
+            margin: 0 auto;
+        }
+        .btn.btn-primary {
+          background-color: #5ff5f2;
+          color: black;
+        }
+        .btn.btn-primary.goback {
+          background-color: green;
+          color: white;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <br><br><br><br>
+    <div class="badge text-bg-primary text-wrap">
+        <h4 style="color:black;">Answer following questions</h4>
+    </div>
+    <br><br><br><br>
+</div>
+<div id="quiz"></div>
+<br><br><br><br>
+<div class="submitButtonDivision">
+    <button id="submit" class="btn btn-primary">Submit Answers</button>
+    <button id="goBackButton" class="btn btn-primary goback">Go Back</button>
+</div>
+<br><br><br><br>
+<div id="results"></div>
+<br><br><br><br>
+<script>
+    var goBackButton = document.getElementById('goBackButton');
+
+    // Add a click event listener to the button
+    goBackButton.addEventListener('click', function() {
+        // Redirect the user to the "index.html" page
+        window.location.href = 'index.html';
+    });
+    // Array of questions and their options
+    var questions = [
+        {
+            question: "How often do you feel sad or hopeless?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often do you exercise?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "When faced challenge, you typically?",
+            options: [
+                { text: "Embrace it as an opportunity to learn and grow", score: 1 },
+                { text: "Feel confident in ability to overcome it", score: 2 },
+                { text: "Doubt your ability to succeed", score: 4 },
+                { text: "Seek help from others immediately", score: 3 }
+            ],
+        },
+        {
+            question: "How often do you find yourself comparing others?",
+            options: [
+                { text: "Never, I focus on my own journey", score: 1 },
+                { text: "Occasionally in specific situations", score: 2 },
+                { text: "I feel myself comparing my abilities and accomplishments to others", score: 4 },
+                { text: "I feel inferior to most people", score: 3 }
+            ],
+        },
+        {
+            question: "How critical are you of your own mistakes?",
+            options: [
+                { text: "I acknowledge and learn from them", score: 1 },
+                { text: "I dwell on them, feeling disappointment", score: 4 },
+                { text: "I ignore them and pretend they didn't happen", score: 2 },
+                { text: "I blame them on external factors beyond my control", score: 3 }
+            ],
+        },
+        {
+            question: "When you make a mistake, how do you typically feel?",
+            options: [
+                { text: "Indifferent", score: 1 },
+                { text: "Concern about the consequences", score: 2 },
+                { text: "Like I'm a worthless person", score: 4 },
+                { text: "Annoyed with myself", score: 3 }
+            ],
+        },
+        {
+            question: "If someone criticizes you, your first reaction is likely to be?",
+            options: [
+                { text: "Open to understanding the perspective", score: 1 },
+                { text: "Unfazed", score: 2 },
+                { text: "Defensive and Argumentative", score: 3 },
+                { text: "Feeling humiliated", score: 4 }
+            ],
+        },
+        {
+            question: "Where did you spent most of your life?",
+            options: [
+                { text: "A Mansion", score: 1 },
+                { text: "Descent sized apartment", score: 2 },
+                { text: "Medium sized house", score: 3 },
+                { text: "Very small house", score: 4 }
+            ],
+        },
+        {
+            question: "Where are you living now?",
+            options: [
+                { text: "A Mansion", score: 1 },
+                { text: "Descent sized apartment", score: 2 },
+                { text: "Medium sized house", score: 3 },
+                { text: "Very small house", score: 4 }
+            ],
+        },
+        {
+            question: "How is quality of air around?",
+            options: [
+                { text: "All day fresh", score: 1 },
+                { text: "Fresh in morning only", score: 2 },
+                { text: "Average", score: 3 },
+                { text: "Unbreathable", score: 4 }
+            ],
+        },
+        {
+            question: "What is your gender?",
+            options: [
+                { text: "Male", score: 1 },
+                { text: "Female", score: 2 },
+                { text: "Transgender", score: 3 },
+                { text: "Rather not say", score: 4 }
+            ],
+        },
+        {
+            question: "What is your preference?",
+            options: [
+                { text: "Socializing with people", score: 1 },
+                { text: "Spend time alone", score: 3 },
+                { text: "A balance between both", score: 2 },
+                { text: "Don't like anything", score: 4 }
+            ],
+        },
+        {
+            question: "What is your preference?",
+            options: [
+                { text: "Enjoy staying up late and sleeping on weekends", score: 3 },
+                { text: "Prefer to wake up early and go to bed early", score: 1 },
+                { text: "Can adjust my sleep schedule", score: 2 },
+                { text: "None of these apply me due to unforeseen circumstances", score: 4 }
+            ],
+        },
+        {
+            question: "What is your current family status?",
+            options: [
+                { text: "Large family with many siblings and cousins", score: 1 },
+                { text: "Small family with single sibling or two", score: 2 },
+                { text: "Raised by single parent or guardian", score: 3 },
+                { text: "Orphan", score: 4 }
+            ],
+        },
+        {
+            question: "Which of the following shows your current academic status?",
+            options: [
+                { text: "Not particularly motivated by external pressure regarding my future", score: 2 },
+                { text: "Value career success but maintain a high balance with  other aspects of life", score: 3 },
+                { text: "Feel immense pressure to achieve success in career", score: 4 },
+                { text: "Not studying", score: 1 }
+            ],
+        },
+        {
+            question: "Have you experienced a significant change in your weight recently?",
+            options: [
+                { text: "No change", score: 1 },
+                { text: "Slight change", score: 2 },
+                { text: "Moderate change", score: 3 },
+                { text: "Drastic change", score: 4 }
+            ],
+        },
+        {
+            question: "How would you rate your overall mood lately?",
+            options: [
+                { text: "Mostly positive", score: 1 },
+                { text: "Neutral", score: 2 },
+                { text: "Mostly negative", score: 3 },
+                { text: "Extremely negative", score: 4 }
+            ],
+        }
+    ];
+
+    var quizContainer = document.getElementById('quiz');
+    var submitButton = document.getElementById('submit');
+    var resultsContainer = document.getElementById('results');
+
+    // Function to generate HTML for questions
+    function generateQuiz() {
+            var quizHTML = '';
+            questions.forEach(function (currentQuestion, questionIndex) {
+                quizHTML += '<div class="card border-dark mb-3">';
+                quizHTML += '<h5 class="card-header">Question ' + (questionIndex + 1) + '</h5>';
+                quizHTML += '<div class="card-body">';
+                quizHTML += '<p class="fs-5">' + currentQuestion.question + '</p>';
+                quizHTML += '<div class="row">';
+                currentQuestion.options.forEach(function (option, optionIndex) {
+                    quizHTML += '<div class="col-sm-6">';
+                    quizHTML += '<div class="form-check">';
+                    quizHTML += '<input class="form-check-input" type="radio" name="question' + questionIndex + '" id="option' + questionIndex + optionIndex + '" value="' + option.text + '">';
+                    quizHTML += '<label class="form-check-label" for="option' + questionIndex + optionIndex + '">' + option.text + '</label>';
+                    quizHTML += '</div>';
+                    quizHTML += '</div>';
+                    if ((optionIndex + 1) % 2 === 0 && optionIndex !== currentQuestion.options.length - 1) {
+                        quizHTML += '</div><div class="row">';
+                    }
+                });
+                quizHTML += '</div>'; // Close row
+                quizHTML += '</div>'; // Close card-body
+                quizHTML += '</div>'; // Close card
+            });
+            quizContainer.innerHTML = quizHTML;
+        }
+
+    // Call the function to generate the quiz
+    generateQuiz();
+
+    // Function to calculate score
+    function calculateScore() {
+        var score = 0;
+
+        questions.forEach(function (currentQuestion, questionIndex) {
+            var selectedOption = document.querySelector('input[name="question' + questionIndex + '"]:checked');
+            if (selectedOption) {
+                var selectedOptionText = selectedOption.value;
+                currentQuestion.options.forEach(function (option) {
+                    if (option.text === selectedOptionText) {
+                        score += option.score;
+                    }
+                });
+            }
+        });
+
+        return score;
+    }
+
+    // Function to display results
+    function showResults() {
+        var score = calculateScore();
+        if(score!=0)
+        {
+            var progress = (score / (questions.length * 4)) * 100;
+            var message = '';
+            var progressBarColor = '';
+            var articles = '';
+            if (score >0 && progress <= 25) {
+                message = "You have demonstrated excellent mental health. Keep up the good work maintaining your current lifestyle. :)";
+                progressBarColor = 'bg-success';
+                articles = "1) 10 Habits of Mentally Strong People: <a href='https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.talentsmarteq.com/10-habits-of-mentally-strong-people/&ved=2ahUKEwj96d3Z_LCFAxWxhYkEHXvsCTgQFnoECA8QAQ&usg=AOvVaw3fJCcsjOIRx_W1PslCKrkL' target='_blank'>Read now</a>";
+            }
+            else if (progress >25 && progress <= 50) {
+                message = "Your attention to your health is commendable. Consider optimizing your surroundings, maintaining a balanced diet, and prioritizing sufficient sleep to further enhance your well-being.";
+                progressBarColor = 'bg-info text-dark';
+                articles = "1) A healthy environment as a human right: <a href='https://knowablemagazine.org/content/article/society/2021/a-healthy-environment-human-right' target='_blank'>Read now</a> <br>2) How to Boost Mental Health Through Better Nutrition: <a href='https://nutrition.org/how-to-boost-mental-health-through-better-nutrition/' target='_blank'>Read now</a>"
+            }
+            else if (progress >50 && progress <= 75) {
+                message = "Your mental well-being appears to be concerning. It is advisable to seek guidance from a qualified psychotherapist, if feasible.";
+                progressBarColor = 'bg-warning text-dark';
+                articles = "1) 10 Signs You Might Need A Therapist: <a href='https://gahope.org/10-signs-you-might-need-a-therapist/' target='_blank'>Read now</a> <br>2) Potential benefits of counselling: <a href='https://www.coe.edu/student-life/student-life-resources/health-wellness/mental-health-counseling/potential-benefits-counseling#:~:text=relief%20from%20depression%2C%20anxiety%20or,solving%20and%20conflict%20resolution%20abilities' target='_blank'>Read now</a>"
+            }
+            else if(progress>75){
+                message = "Your mental well-being appears to be in a critical state. It is strongly advised that you promptly seek guidance from a qualified psychologist.";
+                progressBarColor = 'bg-danger';
+                articles = "1) Getting Treatment During a Crisis: <a href='https://www.nami.org/About-Mental-Illness/Treatment/Getting-Treatment-During-a-Crisis' target='_blank'>Read now</a> <br>2) The role of psychology in addressing mental health issues: <a target='_blank' href='https://paintedbrain.org/blog/mental-health/the-role-of-psychology-in-addressing-mental-health-issues'>Read now</a>"
+            }
+        // Update results container with score and progress bar
+        resultsContainer.innerHTML = `
+            <div>
+                <p class="fs-4" style="text-align: center">You psychogenic score is ${score} out of ${questions.length * 4}</p>
+                <div class="progress" style="width: 40%; margin: 0 auto;">
+                    <div class="progress-bar ${progressBarColor}" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="fs-4" style="text-align: center">${message}</p>
+                <p class="fs-5">Read following articles to help you out:</p>
+                <p class="fs-5">${articles}</p>
+            </div>`;
+        }
+    }
+
+    // Event listener for submit button
+    submitButton.addEventListener('click', showResults);
+</script>
+</body>
+</html>

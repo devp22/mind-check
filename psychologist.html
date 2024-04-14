@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regular</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: #f7f5e4;
+        }
+        .badge.text-bg-primary {
+          background-color: #45f576 !important;
+            width: 75%;
+        }
+        .submitButtonDivision {
+            text-align: center;
+        }
+        .quiz {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card {
+            width: 75%;
+            margin: 0 auto;
+        }
+        .btn.btn-primary {
+          background-color: #5ff5f2;
+          color: black;
+        }
+        .btn.btn-primary.goback {
+          background-color: green;
+          color: white;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <br><br><br><br>
+    <div class="badge text-bg-primary text-wrap">
+        <h4 style="color:black;">Answer following questions</h4>
+    </div>
+    <br><br><br><br>
+</div>
+<div id="quiz"></div>
+<br><br><br><br>
+<div class="submitButtonDivision">
+    <button id="submit" class="btn btn-primary">Submit Answers</button>
+    <button id="goBackButton" class="btn btn-primary goback">Go Back</button>
+</div>
+<br><br><br><br>
+<div id="results"></div>
+<br><br><br><br>
+<script>
+    var goBackButton = document.getElementById('goBackButton');
+
+    // Add a click event listener to the button
+    goBackButton.addEventListener('click', function() {
+        // Redirect the user to the "index.html" page
+        window.location.href = 'index.html';
+    });
+    // Array of questions and their options
+    var questions = [
+        {
+            question: "How often does patient feel overwhelmed by daily tasks?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "Does patient shows emotionless behavior?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient cope up with stress?",
+            options: [
+                { text: "Rarely", score: 4 },
+                { text: "Sometimes", score: 3 },
+                { text: "Often", score: 2 },
+                { text: "Always", score: 1 }
+            ],
+        },
+        {
+            question: "How often does patient cannot concentrate?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient feels difficulty in remembering stuff?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient shows symptoms of rumination or excessive worrying?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient feel lack of energy?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient face difficulty in making conversation?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient engage in competitive beehavior?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient fail in achieving his/her goals?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient show irritability?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient experience hopelessness?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient live unplanned life?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How well does patient work out with change?",
+            options: [
+                { text: "Very well", score: 1 },
+                { text: "Moderately well", score: 2 },
+                { text: "Poorly", score: 3 },
+                { text: "Doesn't like change", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient workout?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+        {
+            question: "How often does patient show loss/gain in weight?",
+            options: [
+                { text: "Rarely", score: 1 },
+                { text: "Sometimes", score: 2 },
+                { text: "Often", score: 3 },
+                { text: "Always", score: 4 }
+            ],
+        },
+    ];
+
+    var quizContainer = document.getElementById('quiz');
+    var submitButton = document.getElementById('submit');
+    var resultsContainer = document.getElementById('results');
+
+    // Function to generate HTML for questions
+    function generateQuiz() {
+            var quizHTML = '';
+            questions.forEach(function (currentQuestion, questionIndex) {
+                quizHTML += '<div class="card border-dark mb-3">';
+                quizHTML += '<h5 class="card-header">Question ' + (questionIndex + 1) + '</h5>';
+                quizHTML += '<div class="card-body">';
+                quizHTML += '<p class="fs-5">' + currentQuestion.question + '</p>';
+                quizHTML += '<div class="row">';
+                currentQuestion.options.forEach(function (option, optionIndex) {
+                    quizHTML += '<div class="col-sm-6">';
+                    quizHTML += '<div class="form-check">';
+                    quizHTML += '<input class="form-check-input" type="radio" name="question' + questionIndex + '" id="option' + questionIndex + optionIndex + '" value="' + option.text + '">';
+                    quizHTML += '<label class="form-check-label" for="option' + questionIndex + optionIndex + '">' + option.text + '</label>';
+                    quizHTML += '</div>';
+                    quizHTML += '</div>';
+                    if ((optionIndex + 1) % 2 === 0 && optionIndex !== currentQuestion.options.length - 1) {
+                        quizHTML += '</div><div class="row">';
+                    }
+                });
+                quizHTML += '</div>'; // Close row
+                quizHTML += '</div>'; // Close card-body
+                quizHTML += '</div>'; // Close card
+            });
+            quizContainer.innerHTML = quizHTML;
+        }
+
+    // Call the function to generate the quiz
+    generateQuiz();
+
+    // Function to calculate score
+    function calculateScore() {
+        var score = 0;
+
+        questions.forEach(function (currentQuestion, questionIndex) {
+            var selectedOption = document.querySelector('input[name="question' + questionIndex + '"]:checked');
+            if (selectedOption) {
+                var selectedOptionText = selectedOption.value;
+                currentQuestion.options.forEach(function (option) {
+                    if (option.text === selectedOptionText) {
+                        score += option.score;
+                    }
+                });
+            }
+        });
+
+        return score;
+    }
+
+    // Function to display results
+    function showResults() {
+        var score = calculateScore();
+        if(score!=0)
+        {
+            var progress = (score / (questions.length * 4)) * 100;
+            var message = '';
+            var progressBarColor = '';
+            var articles = '';
+            if (score >0 && progress <= 25) {
+                message = "The patient is in best mental state and does not need any treatment for now. :)";
+                progressBarColor = 'bg-success';
+            }
+            else if (progress >25 && progress <= 50) {
+                message = "The patient's health seems to be deteriorating at very slow rate. The patient does not need any special treatment as monthly visit and change in lifestyle will fix it.";
+                progressBarColor = 'bg-info text-dark';
+            }
+            else if (progress >50 && progress <= 75) {
+                message = "The patient's mental well-being appears to be concerning. Please ask him/her to pay weekly visits and provide essential advice.";
+                progressBarColor = 'bg-warning text-dark';
+            }
+            else if(progress>75){
+                message = "The patient is in worst mental state. Please ask him/her to pay visit every two days and give the status of 'top priority' to his/her file.";
+                progressBarColor = 'bg-danger';
+            }
+        // Update results container with score and progress bar
+        resultsContainer.innerHTML = `
+            <div>
+                <p class="fs-4" style="text-align: center">You psychogenic score is ${score} out of ${questions.length * 4}</p>
+                <div class="progress" style="width: 40%; margin: 0 auto;">
+                    <div class="progress-bar ${progressBarColor}" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="fs-4" style="text-align: center">${message}</p>
+            </div>`;
+        }
+    }
+
+    // Event listener for submit button
+    submitButton.addEventListener('click', showResults);
+</script>
+</body>
+</html>
